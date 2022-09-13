@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableFeignClients
-public class NossoMercadoLivreApplication {
+public class NossaLojaVirtualApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NossoMercadoLivreApplication.class, args);
+		SpringApplication.run(NossaLojaVirtualApplication.class, args);
 	}
 
 	@Bean
