@@ -8,6 +8,9 @@ O projeto tem alguns pontos de integração com outros sistemas
 Nosso objetivo é realizar os testes da aplicaçõa e implementar a segurança dos endpoints
 
 ## Funcionalidades
+
+As regras de necócio para cada funcionalidade podem ser [consultadas neste arquivo](regras/regras.md). Basicamente elas são:
+
 1. Cadastrar um novo usuário no sistema
 2. Cadastrar novas categorias de produtos
 3. Cadastrar produtos
