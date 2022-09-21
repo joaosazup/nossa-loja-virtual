@@ -8,6 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
+
+import javax.persistence.EntityManager;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -21,6 +25,17 @@ public class SpringBootIntegrationTest {
     protected MockMvc mockMvc;
     @Autowired
     protected ObjectMapper mapper;
+    @Autowired
+    protected EntityManager entityManager;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
+
+    protected void executeQueryInTransaction(String queryString) {
+        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+        transactionTemplate.executeWithoutResult(status -> {
+            entityManager.createQuery(queryString).executeUpdate();
+        });
+    }
 
     public MockHttpServletRequestBuilder GET(String uri) {
         return get(uri)

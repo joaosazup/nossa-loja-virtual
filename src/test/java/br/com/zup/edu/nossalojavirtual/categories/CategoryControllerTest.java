@@ -7,10 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.support.TransactionTemplate;
 
-import javax.persistence.EntityManager;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
@@ -22,17 +19,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class CategoryControllerTest extends SpringBootIntegrationTest {
     @Autowired
     private CategoryRepository categoryRepository;
-    @Autowired
-    private EntityManager entityManager;
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     @BeforeEach
     void setUp() {
-        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
-        transactionTemplate.executeWithoutResult(transactionStatus -> {
-            entityManager.createQuery("delete from Category").executeUpdate();
-        });
+        executeQueryInTransaction("delete from Category");
     }
 
     @Test
