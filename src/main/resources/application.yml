@@ -1,0 +1,21 @@
+# JPA configuration
+spring:
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+  #H2 database
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:18080/realms/loja-virtual/protocol/openid-connect/certs
+          issuer-uri: http://localhost:18080/auth/realms/loja-virtual
