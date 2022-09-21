@@ -64,7 +64,9 @@ public class ObjectIsRegisteredValidator<T, P> implements Validator {
             Field fieldToValidate = classToValidate.getDeclaredField(this.field);
             fieldToValidate.setAccessible(true);
             Object fieldValue = fieldToValidate.get(target);
-
+            if(fieldValue == null) {
+                return;
+            }
             Boolean hasObject = existsFunction.apply((P) fieldValue);
             if (!hasObject) {
                 errors.rejectValue(field, errorCode, format("Category %s is not registered", field));

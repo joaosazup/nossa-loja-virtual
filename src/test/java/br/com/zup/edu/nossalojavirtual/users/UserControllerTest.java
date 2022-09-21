@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.LOCAL_DATE_TIME;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class UserControllerTest extends SpringBootIntegrationTest {
@@ -99,7 +100,8 @@ class UserControllerTest extends SpringBootIntegrationTest {
         assertThat(possibleUser).isNotEmpty();
         User user = possibleUser.get();
         assertThat(user).extracting("createdAt")
-                .matches((o) -> ((LocalDateTime) o).isBefore(LocalDateTime.now()));
+                .asInstanceOf(LOCAL_DATE_TIME)
+                .isBefore(LocalDateTime.now());
     }
 
     @Test

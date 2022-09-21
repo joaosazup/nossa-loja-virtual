@@ -12,6 +12,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -31,9 +32,22 @@ public class SpringBootIntegrationTest {
     private PlatformTransactionManager transactionManager;
 
     protected void executeQueryInTransaction(String queryString) {
+        this.doInTransaction(() -> {
+            entityManager.createQuery(queryString).executeUpdate();
+        });
+    }
+
+    @Transactional
+    protected void saveAEntity(Object entity) {
+        this.doInTransaction(() -> {
+            entityManager.persist(entity);
+        });
+    }
+
+    public void doInTransaction(Runnable runnable) {
         TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
         transactionTemplate.executeWithoutResult(status -> {
-            entityManager.createQuery(queryString).executeUpdate();
+            runnable.run();
         });
     }
 
