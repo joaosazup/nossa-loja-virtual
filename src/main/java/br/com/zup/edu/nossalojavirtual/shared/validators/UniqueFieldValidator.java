@@ -72,7 +72,7 @@ public class UniqueFieldValidator<T, P> implements Validator {
 
             Boolean hasObject = existsFunction.apply((P) fieldValue);
             if (hasObject) {
-                errors.rejectValue(field, errorCode, format("%s is already registered", field));
+                errors.rejectValue(field, errorCode,"is already registered");
             }
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new IllegalArgumentException(e);
