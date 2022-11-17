@@ -16,4 +16,6 @@ public interface ProductRepository extends Repository<Product, UUID> {
     Optional<Product> findById(UUID uuid);
 
     List<Product> findByUser(User user);
+
+    void deleteAll();
 }

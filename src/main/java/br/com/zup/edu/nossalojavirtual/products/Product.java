@@ -4,6 +4,7 @@ import br.com.zup.edu.nossalojavirtual.categories.Category;
 import br.com.zup.edu.nossalojavirtual.purchase.NewPurchaseRequest;
 import br.com.zup.edu.nossalojavirtual.purchase.Purchase;
 import br.com.zup.edu.nossalojavirtual.users.User;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -19,11 +20,10 @@ import static org.springframework.util.Assert.notEmpty;
 
 @Table(name = "products")
 @Entity
-public
-class Product {
+public class Product {
 
     @Id
-    @Column(name = "product_id")
+    @Column(name = "product_id", columnDefinition = "UUID")
     private UUID id;
 
     @NotBlank
@@ -71,9 +71,11 @@ class Product {
     @OneToMany(mappedBy = "product")
     private List<Question> questions;
 
-    @Version
     @Column(name = "product_created_at")
     private LocalDateTime createdAt = now();
+
+    @Version
+    private Long version;
 
 
     /**

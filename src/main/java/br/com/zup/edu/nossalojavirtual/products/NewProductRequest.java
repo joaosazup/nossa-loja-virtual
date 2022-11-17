@@ -6,10 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +40,7 @@ class NewProductRequest {
     @Length(max = 1000)
     private String description;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Long categoryId;

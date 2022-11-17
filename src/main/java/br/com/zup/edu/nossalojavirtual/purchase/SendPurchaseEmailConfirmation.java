@@ -3,6 +3,9 @@ package br.com.zup.edu.nossalojavirtual.purchase;
 import br.com.zup.edu.nossalojavirtual.products.Product;
 import br.com.zup.edu.nossalojavirtual.shared.email.Email;
 import br.com.zup.edu.nossalojavirtual.shared.email.EmailService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -11,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 @Component
 class SendPurchaseEmailConfirmation implements PostPurchaseAction {
 
+    private final Logger logger = LoggerFactory.getLogger(SendPurchaseEmailConfirmation.class);
     private final EmailService emailService;
 
     SendPurchaseEmailConfirmation(EmailService emailService) {
@@ -44,5 +48,6 @@ class SendPurchaseEmailConfirmation implements PostPurchaseAction {
                 .build();
 
         emailService.send(email);
+        logger.info("Email of purchase confirmation sent");
     }
 }
