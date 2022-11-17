@@ -1,6 +1,9 @@
 package br.com.zup.edu.nossalojavirtual.users;
 
 import br.com.zup.edu.nossalojavirtual.shared.validators.UniqueFieldValidator;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +17,7 @@ import static org.springframework.http.ResponseEntity.created;
 @RequestMapping("/api/users")
 class UserController {
 
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserRepository userRepository;
 
     UserController(UserRepository userRepository) {
@@ -28,6 +32,7 @@ class UserController {
         userRepository.save(user);
 
         URI location = URI.create("/api/users/" + user.getId());
+        logger.info("User created");
         return created(location).build();
     }
 

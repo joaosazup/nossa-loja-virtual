@@ -5,6 +5,8 @@ import br.com.zup.edu.nossalojavirtual.shared.validators.ObjectIsRegisteredValid
 import br.com.zup.edu.nossalojavirtual.users.User;
 import br.com.zup.edu.nossalojavirtual.users.UserRepository;
 import org.hibernate.validator.internal.constraintvalidators.bv.NotNullValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +24,7 @@ import static org.springframework.http.ResponseEntity.created;
 @RequestMapping("/api/products")
 class ProductController {
 
+    private final Logger logger = LoggerFactory.getLogger(ProductController.class);
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final PhotoUploader photoUploader;
@@ -50,6 +53,7 @@ class ProductController {
         productRepository.save(product);
 
         URI location = URI.create("/api/products/" + product.getId());
+        logger.info("Product created with id: {}", product.getId());
         return created(location).build();
     }
 

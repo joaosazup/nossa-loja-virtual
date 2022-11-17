@@ -1,5 +1,9 @@
 # JPA configuration
 spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:devdb
+    username: sa
   jpa:
     show-sql: true
     generate-ddl: true
@@ -17,5 +21,27 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://localhost:18080/realms/loja-virtual/protocol/openid-connect/certs
-          issuer-uri: http://localhost:18080/auth/realms/loja-virtual
+          jwk-set-uri: http://localhost:18080/realms/loja-virtual-realm/protocol/openid-connect/certs
+          issuer-uri: http://localhost:18080/auth/realms/loja-virtual-realm
+
+
+management:
+  health:
+    db:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  info:
+    build:
+      enabled: true
+    env:
+      enabled: true
+    git:
+      enabled: true
+    java:
+      enabled: true

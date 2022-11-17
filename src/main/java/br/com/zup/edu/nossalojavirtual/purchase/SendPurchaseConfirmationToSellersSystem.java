@@ -1,12 +1,17 @@
 package br.com.zup.edu.nossalojavirtual.purchase;
 
 import br.com.zup.edu.nossalojavirtual.purchase.SellersRankingClient.SellersRankingRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
 class SendPurchaseConfirmationToSellersSystem implements PostPurchaseAction {
 
+    
+    private final Logger logger = LoggerFactory.getLogger(SendPurchaseConfirmationToSellersSystem.class);
     private final SellersRankingClient sellersRankingClient;
 
     SendPurchaseConfirmationToSellersSystem(SellersRankingClient sellersRankingClient) {
@@ -27,5 +32,6 @@ class SendPurchaseConfirmationToSellersSystem implements PostPurchaseAction {
 
         SellersRankingRequest request = new SellersRankingRequest(postPaymentPurchase.getId(), postPaymentPurchase.sellerEmail());
         sellersRankingClient.requestInvoice(request);
+        logger.info("Confirmation sended to sellers system"); 
     }
 }

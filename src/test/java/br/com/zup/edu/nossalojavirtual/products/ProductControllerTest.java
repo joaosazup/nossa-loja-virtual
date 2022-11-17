@@ -8,16 +8,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor;
 
 import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.InstanceOfAssertFactories.LOCAL_DATE_TIME;
@@ -31,7 +29,15 @@ class ProductControllerTest extends SpringBootIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        executeQueryInTransaction("delete from Product");
+//        doInTransaction(() -> {
+//            entityManager.createNativeQuery("delete from PRODUCT_CHARACTERISTCS").executeUpdate();
+//            entityManager.createNativeQuery("delete from PRODUCT_PHOTOS").executeUpdate();
+//        });
+//        executeQueryInTransaction("delete from Product");
+        productRepository.deleteAll();
+//        doInTransaction(() -> {
+//            entityManager.createQuery("select p from Product as p inner join fetch p.characteristics").getResultList().forEach(o -> entityManager.remove(o));
+//        });
         executeQueryInTransaction("delete from Category");
         executeQueryInTransaction("delete from User");
     }

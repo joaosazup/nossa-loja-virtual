@@ -37,7 +37,6 @@ public class SpringBootIntegrationTest {
         });
     }
 
-    @Transactional
     protected void saveAEntity(Object entity) {
         this.doInTransaction(() -> {
             entityManager.persist(entity);

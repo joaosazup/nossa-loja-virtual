@@ -1,5 +1,6 @@
 package br.com.zup.edu.nossalojavirtual.shared.configurations;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,6 +9,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
 public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
+    @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
+    private String jwkUri;
     /**
      * Override this method to configure the {@link HttpSecurity}. Typically subclasses
      * should not invoke this method by calling super as it may override their
@@ -47,7 +50,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/products/**/questions").hasAuthority("SCOPE_questions:write")
                 .anyRequest().authenticated()
             .and()
-                .oauth2ResourceServer().jwt((jwt) -> jwt.jwkSetUri("http://localhost:18080/realms/loja-virtual/protocol/openid-connect/certs"))
+                .oauth2ResourceServer().jwt((jwt) -> jwt.jwkSetUri(jwkUri))
         ;
     }
 }

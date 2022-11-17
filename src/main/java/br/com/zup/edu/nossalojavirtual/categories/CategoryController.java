@@ -1,6 +1,9 @@
 package br.com.zup.edu.nossalojavirtual.categories;
 
 import br.com.zup.edu.nossalojavirtual.shared.validators.UniqueFieldValidator;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,7 @@ import java.net.URI;
 @RequestMapping("/api/categories")
 class CategoryController {
 
+    private final Logger logger = LoggerFactory.getLogger(CategoryController.class);
     private final CategoryRepository categoryRepository;
 
     CategoryController(CategoryRepository categoryRepository) {
@@ -25,6 +29,7 @@ class CategoryController {
         categoryRepository.save(category);
 
         URI location = URI.create("/api/categories/" + category.getId());
+        logger.info("Category created with id: {}", category.getId());
         return ResponseEntity.created(location).build();
      }
 
